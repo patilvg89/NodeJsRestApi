@@ -23,7 +23,7 @@ function registerUser(req, res, next) {
     })
 }
 
-//GET-> Login User
+//POST-> Login User
 function authenticate(req, res, next) {
     models.AppUsers.findOne({
         where: {email: req.body.email, password: req.body.password},
@@ -58,6 +58,10 @@ function authenticate(req, res, next) {
 
 //GET- ALL Users
 function getAllUsers(req, res, next) {
+    verifyToken(req, res, next, fetchAllUsers)
+}
+
+function fetchAllUsers(req, res, next) {
     models.AppUsers.all({})
         .then(user => {
             responseSuccess(res, user, "All Users")
@@ -67,6 +71,21 @@ function getAllUsers(req, res, next) {
         })
 }
 
+function verifyToken(req, res, next, methods) {
+    var token = req.headers['x-access-token'];
+    if (!token) {
+        responseFailure(res, 403, 'No token provided.');
+    }
+    jwt.verify(token, secret, function (err, decoded) {
+        if (err) {
+            responseFailure(res, 403, 'Failed to authenticate token.');
+        }
+        // if everything good, save to request for use in other routes
+        if (req.email = decoded.email) {
+            methods(req, res, next)
+        }
+    });
+}
 
 //Common Function
 function responseSuccess(res, data, message) {
