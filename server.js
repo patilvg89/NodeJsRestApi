@@ -14,6 +14,10 @@ var app = express();
 //     });
 // });
 
+///////////
+app.set('superSecret', 'qawsefdrftgyhujikolp'); // secret variable
+/////////////
+
 ///////////////////////
 // Server Middleware
 ///////////////////////

@@ -20,10 +20,10 @@ const appUsers = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             defaultValue: false
         }, created_at: {
-            allowNull: false,
+            //allowNull: false,
             type: DataTypes.DATE,
         }, updated_at: {
-            allowNull: false,
+            //allowNull: false,
             type: DataTypes.DATE,
         }
     });

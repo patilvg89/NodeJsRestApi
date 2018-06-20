@@ -18,7 +18,8 @@ router.get('/', function (req, res, next) {
 
 var db = require('./queries');
 
+router.get('/api/getAllUsers', db.getAllUsers);
 router.post('/api/register', db.register);
-router.get('/api/login', db.login);
+router.post('/api/authenticate', db.authenticate);
 
 module.exports = router;
