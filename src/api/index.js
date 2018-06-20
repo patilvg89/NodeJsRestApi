@@ -19,5 +19,6 @@ router.get('/', function (req, res, next) {
 var db = require('./queries');
 
 router.get('/api/users', db.getUsers);
+router.get('/api/loginUser', db.login);
 
 module.exports = router;
