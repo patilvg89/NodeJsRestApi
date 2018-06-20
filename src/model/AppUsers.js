@@ -6,20 +6,32 @@ const appUsers = (sequelize, DataTypes) => {
         }, email: {
             type: DataTypes.STRING,
             primaryKey: true,
+            validate: {
+                isEmail: true
+            }
         }, social_id: {
             type: DataTypes.STRING
         }, password: {
             type: DataTypes.STRING
         }, is_logged_in: {
-            type: DataTypes.BOOLEAN
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         }, session_token: {
             type: DataTypes.STRING
+        }, created_at: {
+            allowNull: false,
+            type: DataTypes.DATE
+        }, updated_at: {
+            allowNull: false,
+            type: DataTypes.DATE
         }
     });
 
     AppUsers.associate = function (models) {
         AppUsers.hasOne(models.Profile)
     };
+
+    //AppUsers.sync({alter: true});
 
     return AppUsers;
 };
