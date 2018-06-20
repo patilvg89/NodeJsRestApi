@@ -1,12 +1,11 @@
 const appUsers = (sequelize, DataTypes) => {
-    return sequelize.define('app_users', {
+    var AppUsers = sequelize.define('app_users', {
         id: {
             type: DataTypes.INTEGER,
-            unique: true,
+            autoIncrement: true,
         }, email: {
             type: DataTypes.STRING,
             primaryKey: true,
-            unique: true,
         }, social_id: {
             type: DataTypes.STRING
         }, password: {
@@ -17,6 +16,12 @@ const appUsers = (sequelize, DataTypes) => {
             type: DataTypes.STRING
         }
     });
+
+    AppUsers.associate = function (models) {
+        AppUsers.hasOne(models.Profile)
+    };
+
+    return AppUsers;
 };
 
 module.exports = appUsers;

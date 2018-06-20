@@ -17,6 +17,7 @@ const sequelize = new Sequelize('postgres', 'postgres', 'carpool', {
 
 const models = {
     AppUsers: sequelize.import('./appUsers'),
+    Profile: sequelize.import('./profile')
 };
 
 Object.keys(models).forEach(key => {

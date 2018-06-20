@@ -6,7 +6,12 @@ const models = require("../model/index.js");
 //GET - all users list
 
 function getUsers(req, res, next) {
-    models.AppUsers.all()
+    models.AppUsers.all({
+        include: {
+            model: models.Profile// where: {fk_app_users_email: 'vrgptl@gmail.com'}
+        }
+
+    })
         .then(users => {
             res.status(200)
                 .json({
@@ -14,33 +19,14 @@ function getUsers(req, res, next) {
                     data: users,
                     message: 'Retrieved all users'
                 })
-        }).catch(function (err) {
-        //return next(err);
-        return res.status(200)
-            .json({
-                status: 'error',
-                message: err//"User does not exists"
-            });
-    })
-
-
-    /*db.any('select * from app_users FULL OUTER JOIN profile ON app_users.email = profile.fk_app_users')
-        .then(function (data) {
-            res.status(200)
-                .json({
-                    status: 'success',
-                    data: data,
-                    message: 'Retrieved all users'
-                })
         })
         .catch(function (err) {
-            //return next(err);
-            return res.status(200)
+            res.status(200)
                 .json({
                     status: 'error',
-                    message: err//"User does not exists"
+                    message: err
                 });
-        })*/
+        })
 }
 
 /////////////
