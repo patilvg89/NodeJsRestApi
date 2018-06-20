@@ -14,16 +14,17 @@ const appUsers = (sequelize, DataTypes) => {
         }, password: {
             type: DataTypes.STRING
         }, is_logged_in: {
-            type: DataTypes.BOOLEAN,
+            type: DataTypes.INTEGER,
             defaultValue: false
         }, session_token: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            defaultValue: false
         }, created_at: {
             allowNull: false,
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
         }, updated_at: {
             allowNull: false,
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
         }
     });
 

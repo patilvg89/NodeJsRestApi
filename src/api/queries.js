@@ -3,41 +3,48 @@ const models = require("../model/index.js");
 // Query Functions
 /////////////////////
 
-//GET - all users list
-
-function getUsers(req, res, next) {
-    models.AppUsers.all({
-        include: {model: models.Profile, /* where: {email: 'vrgptl@gmail.com'}*/}
-    }).then(users => {
-        res.status(200)
-            .json({
-                status: 'success',
-                data: users,
-                message: 'Retrieved all users'
-            })
-    }).catch(function (err) {
-        res.status(200)
-            .json({
-                status: 'error',
-                message: err
-            });
-    })
+//POST -> Register User
+function registerUser(req, res, next) {
+    return models.AppUsers
+        .create({
+            email: req.body.email,
+            social_id: req.body.social_id,
+            password: req.body.password,
+            is_logged_in: 0,
+            session_token: null,
+            created_at: Date.now(),
+            updated_at: Date.now(),
+        })
+        .then(user => {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: user,
+                    message: 'user created'
+                })
+        }).catch(function (err) {
+            res.status(400)
+                .json({
+                    status: 'error',
+                    message: err.toString()
+                });
+        })
 }
 
-
-function login(req, res, next) {
+//GET-> Login User
+function loginUser(req, res, next) {
     models.AppUsers.findOne({
-        where: {email: 'vrgptl@gmail.com'},
+        where: {email: req.param.email, password: req.param.password},
         include: {model: models.Profile}
     }).then(user => {
         res.status(200)
             .json({
                 status: 'success',
                 data: user,
-                message: 'Retrieved user'
+                message: 'Login Success'
             })
     }).catch(function (err) {
-        res.status(200)
+        res.status(400)
             .json({
                 status: 'error',
                 message: err.toString()
@@ -50,6 +57,6 @@ function login(req, res, next) {
 /////////////
 
 module.exports = {
-    getUsers: getUsers,
-    login: login,
+    login: loginUser,
+    register: registerUser
 };

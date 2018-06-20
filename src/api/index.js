@@ -18,7 +18,7 @@ router.get('/', function (req, res, next) {
 
 var db = require('./queries');
 
-router.get('/api/users', db.getUsers);
-router.get('/api/loginUser', db.login);
+router.post('/api/register', db.register);
+router.get('/api/login', db.login);
 
 module.exports = router;
